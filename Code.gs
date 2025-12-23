@@ -1,7 +1,6 @@
 /**
  * @fileoverview Bibliothèque moderne pour importer des données JSON dans Google Sheets.
- * Refonte complète de ImportJSON pour le moteur V8 et ES6+.
- * @author Fabrice Faucheux (Expert Apps Script)
+ * @author Fabrice Faucheux 
  */
 
 /**
