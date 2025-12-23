@@ -7,7 +7,7 @@
 
 Bibliothèque Google Apps Script moderne pour importer et aplanir des données JSON directement dans Google Sheets. Cette version est optimisée pour le moteur V8 (ES6+).
 
-## Fonctionnalités Clés
+## Fonctionnalités clés
 
 * **Importation GET** : Récupération standard depuis des API publiques.
 * **Importation POST** : Support des API nécessitant un payload (corps de requête).
@@ -15,7 +15,7 @@ Bibliothèque Google Apps Script moderne pour importer et aplanir des données J
 * **Filtrage par Chemin** : Extraction ciblée de sous-ensembles de données (ex: `/data/resultats`).
 * **Options Flexibles** : Gestion des en-têtes (`noHeaders`, `rawHeaders`).
 
-## Installation Manuelle
+## Installation manuelle
 
 1.  Ouvrez votre Google Sheet.
 2.  Allez dans **Extensions** > **Apps Script**.
