@@ -40,7 +40,7 @@ const IMPORTER_JSON_POST = (url, payload, cheminRequete = "", options = "") => {
 
 /**
  * Cœur logique de l'importation. Gère le fetch, le parsing et la transformation.
- * * @param {string} url - L'URL cible.
+ * @param {string} url - L'URL cible.
  * @param {Object} optionsRequete - Options pour UrlFetchApp (method, payload, etc.).
  * @param {string} cheminRequete - Le chemin pour filtrer le JSON.
  * @param {string} optionsUtilisateur - Chaîne d'options (ex: "noHeaders").
@@ -49,7 +49,7 @@ const IMPORTER_JSON_POST = (url, payload, cheminRequete = "", options = "") => {
  */
 const executerImportation_ = (url, optionsRequete, cheminRequete, optionsUtilisateur) => {
   if (!url) return [["Erreur : URL manquante"]];
-
+  
   try {
     // 1. Appel API
     const reponse = UrlFetchApp.fetch(url, {
@@ -69,7 +69,7 @@ const executerImportation_ = (url, optionsRequete, cheminRequete, optionsUtilisa
     // 3. Filtrage et Aplatissement
     // Si un chemin est spécifié, on descend dans l'objet
     const donneesCible = naviguerVersChemin_(jsonBrut, cheminRequete);
-    
+
     // Aplatissement en tableau 2D
     const tableauFinal = transformerEnTableau2D_(donneesCible, config);
 
@@ -83,7 +83,7 @@ const executerImportation_ = (url, optionsRequete, cheminRequete, optionsUtilisa
 
 /**
  * Convertit des données JSON complexes (Objets/Tableaux imbriqués) en un tableau 2D pour Sheets.
- * * @param {Object|Array} json - Les données JSON à transformer.
+ * @param {Object|Array} json - Les données JSON à transformer.
  * @param {Object} config - Configuration (headers, etc.).
  * @return {Array<Array<any>>} Tableau 2D.
  * @private
@@ -95,7 +95,6 @@ const transformerEnTableau2D_ = (json, config) => {
   // Fonction récursive pour aplanir un objet
   const aplanirObjet = (obj, prefixe = "") => {
     const resultat = {};
-    
     Object.keys(obj).forEach(cle => {
       const valeur = obj[cle];
       const nouvelleCle = prefixe ? `${prefixe}/${cle}` : cle; // Séparateur de chemin standard
@@ -107,7 +106,6 @@ const transformerEnTableau2D_ = (json, config) => {
       } else if (Array.isArray(valeur)) {
         // C'est un tableau -> On joint les valeurs scalaires ou on laisse tel quel pour le traitement par ligne
         // Simplification pour Sheets : on convertit souvent les tableaux en chaîne pour tenir dans une cellule
-        // Ou on pourrait étendre les lignes. Ici, choix de concaténer pour simplicité d'affichage.
         resultat[nouvelleCle] = valeur.map(v => (typeof v === 'object' ? JSON.stringify(v) : v)).join(", ");
         enTetesSet.add(nouvelleCle);
       } else {
@@ -169,7 +167,7 @@ const naviguerVersChemin_ = (json, chemin) => {
   
   const segments = chemin.split("/").filter(s => s.length > 0);
   let pointeur = json;
-
+  
   for (const segment of segments) {
     if (pointeur && pointeur[segment] !== undefined) {
       pointeur = pointeur[segment];
@@ -208,4 +206,3 @@ const formaterEnTete_ = (texte) => {
     .replace(/[\/\_]/g, " ") // Remplace / et _ par espace
     .replace(/(\w)(\w*)/g, (g0, g1, g2) => g1.toUpperCase() + g2.toLowerCase()); // Title Case
 };
-
