@@ -205,3 +205,41 @@ const formaterEnTete_ = (texte) => {
     .replace(/[\/\_]/g, " ") // Remplace / et _ par espace
     .replace(/(\w)(\w*)/g, (g0, g1, g2) => g1.toUpperCase() + g2.toLowerCase()); // Title Case
 };
+
+/**
+ * Fonction de test unitaire pour valider la logique d'importation
+ * sans passer par l'interface du tableur.
+ */
+const testerImportationManuelle = () => {
+  // URL de test fiable (API publique)
+  const urlTest = "https://jsonplaceholder.typicode.com/users";
+  
+  console.log(`🔄 Démarrage du test avec : ${urlTest}`);
+
+  try {
+    // Appel direct de la fonction définie dans votre script
+    // On demande ici les données sans filtrage de chemin ("") et sans options ("")
+    const resultat = IMPORTER_JSON(urlTest, "", "");
+
+    // Analyse du résultat
+    if (!Array.isArray(resultat) || resultat.length === 0) {
+      console.error("❌ Erreur : Le résultat est vide ou mal formaté.");
+      return;
+    }
+
+    // Affichage des métadonnées du résultat
+    console.log("✅ Succès : Données récupérées !");
+    console.log(`📊 Dimensions du tableau : ${resultat.length} lignes x ${resultat[0].length} colonnes`);
+    
+    // Aperçu de la première ligne (En-têtes)
+    console.log("Vérification des en-têtes (Ligne 1) :");
+    console.log(resultat[0]);
+
+    // Aperçu de la première ligne de données
+    console.log("Vérification de la première donnée (Ligne 2) :");
+    console.log(resultat[1]);
+
+  } catch (erreur) {
+    console.error(`❌ Exception critique lors du test : ${erreur.message}`);
+  }
+};
